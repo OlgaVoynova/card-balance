@@ -9,5 +9,4 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class PlasticCard {
     private final String number;
-    private final LocalDate expireDate;
 }

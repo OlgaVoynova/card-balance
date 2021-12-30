@@ -8,21 +8,21 @@ public class AtmSession {
 
     private static BankingService service;
 
-    User user;
+    Card digitalCard;
     PlasticCard plasticCard;
 
     private static final Integer PIN_ENTER_RETRY = 3;
 
-    private AtmSession(PlasticCard plasticCard, User user) {
-        this.user = user;
+    private AtmSession(PlasticCard plasticCard, Card digitalCard) {
+        this.digitalCard = digitalCard;
         this.plasticCard = plasticCard;
     }
 
     public static AtmSession startAtmService (PlasticCard plasticCard) {
         service = new BankingService(); /* Пробуем соединиться с банком */
-        User authUser = authorization(plasticCard);
-        if (authUser != null) {
-            return new AtmSession(plasticCard,authUser);
+        Card card = authorization(plasticCard);
+        if (card != null) {
+            return new AtmSession(plasticCard,card);
         }
         else {
             System.out.println("До свидания!");
@@ -58,21 +58,17 @@ public class AtmSession {
     }
 
     private void getCardBalance() {
-        if (this.plasticCard.getExpireDate().isAfter(LocalDate.now())) {
-            System.out.println(service.getCardBalance(this.user.getCard(plasticCard.getNumber())));
-        } else {
-            System.out.println("Обратитесь в банк для замены карты: срок действия текущей карты истек!");
-        }
+        System.out.println("Баланс карты: " + service.getCardBalance(digitalCard));
     }
 
-    private static User authorization(PlasticCard card) {
-        User user;
+    private static Card authorization(PlasticCard card) {
+        Card foundCard;
         for (int i=0; i<PIN_ENTER_RETRY; i++) {
             System.out.println("Введите пин-код: ");
             String pin = "456";
-            user = service.findUser(card.getNumber(),pin);
-            if(user != null) {
-                return user;
+            foundCard = service.findCard(card.getNumber(),pin);
+            if(foundCard != null) {
+                return foundCard;
             }
         }
         return null;
@@ -81,6 +77,7 @@ public class AtmSession {
     private void removeCard() {
         System.out.println("До свидания!");
         this.plasticCard = null;
+        this.digitalCard = null;
     }
 
 }
