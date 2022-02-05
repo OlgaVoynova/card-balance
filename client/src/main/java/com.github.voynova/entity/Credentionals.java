@@ -1,4 +1,4 @@
-package com.github.voynova.client.entity;
+package com.github.voynova.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

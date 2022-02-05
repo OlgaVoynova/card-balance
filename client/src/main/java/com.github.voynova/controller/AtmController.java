@@ -1,9 +1,9 @@
-package com.github.voynova.client.controller;
+package com.github.voynova.controller;
 
 
-import com.github.voynova.client.service.AtmService;
-import com.github.voynova.client.usernterface.PrinterService;
-import com.github.voynova.client.usernterface.PrinterServiceConsole;
+import com.github.voynova.service.AtmService;
+import com.github.voynova.usernterface.PrinterService;
+import com.github.voynova.usernterface.PrinterServiceConsole;
 
 import java.util.UUID;
 

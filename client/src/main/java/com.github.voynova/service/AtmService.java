@@ -1,7 +1,7 @@
-package com.github.voynova.client.service;
+package com.github.voynova.service;
 
 import com.github.voynova.controller.CardController;
-import com.github.voynova.client.entity.Credentionals;
+import com.github.voynova.entity.Credentionals;
 
 import java.util.UUID;
 

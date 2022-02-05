@@ -1,6 +1,6 @@
-package com.github.voynova.client.usernterface;
+package com.github.voynova.usernterface;
 
-import com.github.voynova.client.entity.Credentionals;
+import com.github.voynova.entity.Credentionals;
 
 import java.util.Scanner;
 
