@@ -5,20 +5,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.voynova</groupId>
-    <artifactId>cardBalance</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>bank</artifactId>
     <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <lombok.version>1.18.22</lombok.version>
     </properties>
 
-
-
-    <modules>
-        <module>bank</module>
-        <module>client</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>
