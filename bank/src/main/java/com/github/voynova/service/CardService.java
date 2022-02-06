@@ -1,13 +1,17 @@
 package com.github.voynova.service;
 
+import com.github.voynova.dto.AithorizationTokenDto;
+import com.github.voynova.dto.CardBalanceDto;
 import com.github.voynova.entity.CardEntity;
 import com.github.voynova.repository.CardRepository;
 import lombok.NonNull;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class CardService {
 
     private CardRepository repository;
@@ -15,11 +19,12 @@ public class CardService {
     public CardService() {
         this.repository = new CardRepository();
     }
-    public int getCardBalanceById (@NonNull UUID cardId) {
-        return repository.findCardById(cardId).get().getBalance();
+
+    public CardBalanceDto getCardBalanceById (@NonNull UUID cardId) {
+        return new CardBalanceDto(repository.findCardById(cardId).get().getBalance());
     }
 
-    public UUID findCardId (@NonNull String cardNumber, @NonNull String pin) {
+    public AithorizationTokenDto findCardId (@NonNull String cardNumber, @NonNull String pin) {
         Optional<CardEntity> cardEntity = repository.findCardByNumberAndPin(cardNumber,pin);
         if (cardEntity.isEmpty()) {
             throw new NullPointerException("Карта не найдена!");
@@ -27,7 +32,7 @@ public class CardService {
         else if (cardEntity.get().getExpireDate().isBefore(LocalDate.now())) {
             throw new IllegalStateException("Срок действия вашей карты истек!");
         }
-        else return cardEntity.get().getId();
+        else return new AithorizationTokenDto(cardEntity.get().getId());
     }
 
 }

@@ -2,6 +2,7 @@ package com.github.voynova.repository;
 
 import com.github.voynova.entity.CardEntity;
 import lombok.NonNull;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+@Repository
 public class CardRepository {
 
     private List<CardEntity> cardEntities;
