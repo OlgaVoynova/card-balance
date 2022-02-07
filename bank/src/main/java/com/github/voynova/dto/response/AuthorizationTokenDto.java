@@ -4,6 +4,6 @@ import lombok.Value;
 
 import java.util.UUID;
 @Value
-public class AithorizationTokenDto {
+public class AuthorizationTokenDto {
     private final UUID uuid;
 }

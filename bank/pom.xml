@@ -64,6 +64,11 @@
             <version>${springboot.starterweb.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.swagger.codegen.v3</groupId>
+            <artifactId>swagger-codegen</artifactId>
+            <version>3.0.21</version>
+        </dependency>
 
 
     </dependencies>
