@@ -22,6 +22,9 @@ public class CardRepository {
         CardEntity c2 = new CardEntity(UUID.randomUUID(),456,"456","456", LocalDate.now().minusDays(456));
         CardEntity c3 = new CardEntity(UUID.randomUUID(),-789,"789","789", LocalDate.now().plusDays(789));
         cardEntities = List.of(c1,c2,c3);
+        for (CardEntity e : cardEntities) {
+            System.out.println(e.toString());
+        }
     }
 
     public Stream<CardEntity> findAll() {

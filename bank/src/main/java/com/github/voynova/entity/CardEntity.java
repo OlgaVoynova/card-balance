@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-//Методы этого класса должны быть доступны только CardService
+
 public class CardEntity {
     private UUID id;
     private int balance;

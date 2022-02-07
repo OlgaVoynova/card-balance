@@ -1,7 +1,7 @@
 package com.github.voynova.service;
 
-import com.github.voynova.dto.AithorizationTokenDto;
-import com.github.voynova.dto.CardBalanceDto;
+import com.github.voynova.dto.response.AithorizationTokenDto;
+import com.github.voynova.dto.response.CardBalanceDto;
 import com.github.voynova.entity.CardEntity;
 import com.github.voynova.repository.CardRepository;
 import lombok.NonNull;

@@ -1,4 +1,4 @@
-package com.github.voynova.dto;
+package com.github.voynova.dto.response;
 
 import lombok.Value;
 

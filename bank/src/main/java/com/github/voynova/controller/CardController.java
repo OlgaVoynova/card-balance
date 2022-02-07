@@ -1,14 +1,12 @@
 package com.github.voynova.controller;
 
-import com.github.voynova.dto.AithorizationTokenDto;
-import com.github.voynova.dto.CardBalanceDto;
+import com.github.voynova.dto.request.CredentionalsDto;
+import com.github.voynova.dto.response.AithorizationTokenDto;
+import com.github.voynova.dto.response.CardBalanceDto;
 import com.github.voynova.service.CardService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.apache.tomcat.util.http.parser.Authorization;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -18,12 +16,12 @@ public class CardController {
 
     private CardService service;
 
-    @PostMapping("/card/authorize/{cardNumber}/{cardPin}")
-    public AithorizationTokenDto getAuthorization(@NonNull @PathVariable("cardNumber") String cardNumber,
-                                                  @NonNull @PathVariable("cardPin") String cardPin) {
+    @PostMapping("/card/authorization")
+    public AithorizationTokenDto getAuthorization(@RequestBody CredentionalsDto credentionals) {
         try {
             /* позвращаем токен клиенту - ResponseEntity.ok */
-            return service.findCardId(cardNumber,cardPin);
+            System.out.println(credentionals);
+            return service.findCardId(credentionals.getCardNumber(),credentionals.getCardPin());
         } catch (NullPointerException | IllegalStateException e) {
             /* позвращаем ошибку клиенту - ResponseEntity.notOk */
             //TODO как возвращать ошибку?
@@ -33,8 +31,8 @@ public class CardController {
         return null;
     }
 
-    @PostMapping("/card/{cardId}/balance")
-    public CardBalanceDto getCardBalance (@NonNull @PathVariable UUID cardId) {
+    @GetMapping("/card/{cardId}/balance")
+    public CardBalanceDto getCardBalance (@NonNull @PathVariable(name = "cardId") UUID cardId) {
         return  service.getCardBalanceById(cardId);
     }
 
