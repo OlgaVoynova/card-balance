@@ -1,16 +1,11 @@
 package com.github.voynova.controller;
 
-import com.github.voynova.dto.request.CredentionalsDto;
-import com.github.voynova.dto.response.AuthorizationTokenDto;
-import com.github.voynova.dto.response.CardBalanceDto;
-import com.github.voynova.exception.AuthorizationFailedException;
+import com.github.voynova.dto.request.CredentialsDto;
+import com.github.voynova.dto.response.ResponseEnvelope;
 import com.github.voynova.service.CardService;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -21,20 +16,21 @@ public class CardController {
     private CardService service;
 
     @PostMapping("/card/authorization")
-    public ResponseEntity<AuthorizationTokenDto> getAuthorization(@RequestBody CredentionalsDto credentionals) {
+    public ResponseEnvelope getAuthorization(@RequestBody CredentialsDto credentials) {
         try {
-            //System.out.println(credentionals);
-            return ResponseEntity.ok(service.findCardId(credentionals.getCardNumber(),credentionals.getCardPin()));
-        } catch (AuthorizationFailedException e) {
-            //TODO как возвращать ошибку с нормальным описанием?
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
+            return new ResponseEnvelope(HttpStatus.OK.toString(),null,service.getSession(credentials.getCardNumber(),credentials.getCardPin()));
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return new ResponseEnvelope(HttpStatus.BAD_REQUEST.toString(),e.getMessage(),null);
         }
-        //return ResponseEntity.ok(service.findCardId(credentionals.getCardNumber(),credentionals.getCardPin()));
     }
 
-    @GetMapping("/card/{cardId}/balance")
-    public ResponseEntity<CardBalanceDto> getCardBalance (@NonNull @PathVariable(name = "cardId") UUID cardId) {
-        return ResponseEntity.ok(service.getCardBalanceById(cardId));
+    @GetMapping("/card/{sessionId}/balance")
+    public ResponseEnvelope getCardBalance (@PathVariable(name = "sessionId") UUID sessionId) {
+        try {
+            return new ResponseEnvelope(HttpStatus.OK.toString(),null,service.getCardBalance(sessionId));
+        } catch (IllegalAccessException e) {
+            return new ResponseEnvelope(HttpStatus.BAD_REQUEST.toString(),e.getMessage(),null);
+        }
     }
 
 }

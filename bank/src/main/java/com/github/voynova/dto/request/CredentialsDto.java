@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
 @Value
-public final class CredentionalsDto {
+public final class CredentialsDto {
     private final String cardNumber;
     private final String cardPin;
 
-    public CredentionalsDto(@JsonProperty("cardNumber") String cardNumber, @JsonProperty("cardPin") String cardPin) {
+    public CredentialsDto(@JsonProperty("cardNumber") String cardNumber, @JsonProperty("cardPin") String cardPin) {
         this.cardNumber = cardNumber;
         this.cardPin = cardPin;
     }

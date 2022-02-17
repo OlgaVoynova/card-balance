@@ -1,40 +1,71 @@
 package com.github.voynova.service;
 
-import com.github.voynova.dto.response.AuthorizationTokenDto;
 import com.github.voynova.dto.response.CardBalanceDto;
 import com.github.voynova.entity.CardEntity;
-import com.github.voynova.exception.AuthorizationFailedException;
+import com.github.voynova.entity.SessionEntity;
+import com.github.voynova.entity.additional.AuthorizationFailCode;
 import com.github.voynova.repository.CardRepository;
+import com.github.voynova.repository.SessionRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class CardService {
 
-    private CardRepository repository;
+    private CardRepository cardRepository;
+    private SessionRepository sessionRepository;
 
-    public CardBalanceDto getCardBalanceById (@NonNull UUID cardId) {
-        CardEntity card = repository.findCardEntityById(cardId);
-        if (card == null) {
-            throw new AuthorizationFailedException("Карта не найдена!");
-        } else
-            return new CardBalanceDto(card.getBalance());
+    private final static int SESSION_DURATION_MINUTES = 2;
+
+    /**
+     * Возвращает баланс карты по идентификатору сессии сессия
+     * @param sessionId идентификатор сессии
+     * @return баланс карты
+     * @throws IllegalAccessException если нет действующей сессии
+     */
+    public CardBalanceDto getCardBalance (@NonNull UUID sessionId) throws IllegalAccessException {
+        SessionEntity session = sessionRepository.getSessionEntityById(sessionId);
+        if (session == null || session.getCard() == null || session.getAttemptTimestamp().isBefore(LocalDateTime.now().minusMinutes(SESSION_DURATION_MINUTES))) {
+            throw new IllegalAccessException("Необходима авторизация!");
+        } else {
+            return new CardBalanceDto(session.getCard().getBalance());
+        }
     }
 
-    public AuthorizationTokenDto findCardId (@NonNull String cardNumber, @NonNull String pin) {
-        CardEntity cardEntity = repository.findCardEntityByNumberAndPin(cardNumber,pin);
+    /**
+     * Открывает сессию на 2 минуты или возвращает действующую
+     * @param cardNumber номер карты
+     * @param pin пин код карты
+     * @return идентификатор сессии: новой или действующей
+     * @throws IllegalArgumentException если не найдена карта по заданным credentials
+     * @throws IllegalStateException если срок действия карты истек
+     */
+    public UUID getSession (@NonNull String cardNumber, @NonNull String pin) throws IllegalStateException, IllegalArgumentException {
+        CardEntity cardEntity = cardRepository.findCardEntityByNumberAndPin(cardNumber,pin);
         if (cardEntity == null) {
-            throw new AuthorizationFailedException("Карта не найдена!");
+            sessionRepository.save(new SessionEntity(null,false, AuthorizationFailCode.CARD_NOT_FOUND));
+            throw new IllegalArgumentException("Карта не найдена!");
         }
         else if (cardEntity.getExpireDate().isBefore(LocalDate.now())) {
-            throw new AuthorizationFailedException("Срок действия вашей карты истек!");
+            sessionRepository.save(new SessionEntity(cardEntity,false, AuthorizationFailCode.CARD_EXPIRED));
+            throw new IllegalStateException("Срок действия вашей карты истек!");
         }
-        else return new AuthorizationTokenDto(cardEntity.getId());
+        else {
+            System.out.println("now - " + LocalDateTime.now().minusMinutes(SESSION_DURATION_MINUTES));
+            SessionEntity session = sessionRepository.getSessionEntityByCardAndAttemptTimestampIsAfter(cardEntity,LocalDateTime.now().minusMinutes(SESSION_DURATION_MINUTES));
+            if (session == null) {
+                session = new SessionEntity(cardEntity,true, null);
+                System.out.println("session started at " + session.getAttemptTimestamp());
+                sessionRepository.save(session);
+            }
+            return session.getId();
+        }
     }
 
 }

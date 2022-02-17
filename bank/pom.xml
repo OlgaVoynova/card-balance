@@ -11,9 +11,17 @@
     <properties>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
-        <lombok.version>1.18.22</lombok.version>
+        <lombok.version>1.18.10</lombok.version>
         <springboot.version>2.5.4</springboot.version>
         <springboot.starterweb.version>2.5.4</springboot.starterweb.version>
+        <springboot.maven.version>2.5.4</springboot.maven.version>
+        <springboot.maven.compiler.version>3.8.1</springboot.maven.compiler.version>
+        <mojo.version>1.2.1</mojo.version>
+        <javax.persistence.version>2.2</javax.persistence.version>
+        <springboot.data.version>2.5.4</springboot.data.version>
+        <h2.version>1.4.200</h2.version>
+        <jaxb.version>2.3.1</jaxb.version>
+
     </properties>
 
     <build>
@@ -21,25 +29,29 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.4</version>
-
+                <version>${springboot.maven.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${springboot.maven.compiler.version}</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${maven.compiler.target}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <version>${mojo.version}</version>
                 <configuration>
                     <mainClass>com.github.voynova.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
             </plugin>
         </plugins>
     </build>
@@ -67,27 +79,52 @@
         </dependency>
 
         <dependency>
-            <groupId>io.swagger.codegen.v3</groupId>
-            <artifactId>swagger-codegen</artifactId>
-            <version>3.0.21</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${springboot.data.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>2.5.4</version>
-        </dependency>
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.200</version>
+            <version>${h2.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>
-            <version>2.2</version>
+            <version>${javax.persistence.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.9.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <version>2.5.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.3.9</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

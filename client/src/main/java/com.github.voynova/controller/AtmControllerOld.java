@@ -1,21 +1,15 @@
 package com.github.voynova.controller;
 
-
-import com.github.voynova.entity.Credentionals;
+/*
 import com.github.voynova.service.AtmService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
-
-/* Поднимается каждый раз для нового пользователя */
-@RestController
-@AllArgsConstructor
-//TODO в этих методах должны вызываться методы сервиса, который передает данные через Rest Template В bank
-public class AtmController {
+*/
+public class AtmControllerOld {/*
     //private UUID cardId;
     private AtmService atmService;
     //private PrinterService printer;
@@ -24,33 +18,34 @@ public class AtmController {
         //this.printer = new PrinterServiceConsole();
         this.atmService = new AtmService();
     }*/
-
-    @GetMapping("/ATM/card/{guid}/balance")
+/*
+    @PostMapping("/ATM/card/{guid}/balance")
     private void getCardBalance (@PathVariable("guid") UUID cardGuid) {
 
-        //printer.printCardBalance(atmService.getCardBalance(cardGuid));
-        System.out.println("Запрашиваю баланс по карте " + cardGuid);
+        printer.printCardBalance(atmService.getCardBalance(cardId));
     }
 
-    @PostMapping("/ATM/card/authorization")
-    private UUID authorization (Credentionals credentionals) {
-        /*
+    private void authorization () {
         if (this.cardId != null ) {
             printer.alreadyAuthorizedUserError();
         } else {
             UUID cardIdFromBank = atmService.getAuthorization(printer.enterCredentionals());
-            if (cardIdFromBank == null) {
-                printer.unauthorizedUserError();
+            if (cardIdFromBank == null) {*/
+                /* хорошо бы именно здесь печатать, почему: не совпали номер-пин или карта истекла */
+               /* printer.unauthorizedUserError();
             } else
                 this.cardId = cardIdFromBank;
-        }*/
-        System.out.println("Credentionals: " + credentionals);
-        return UUID.randomUUID();
+        }
     }
-/*
+
+    private void signOff () {
+        this.cardId = null;
+    }
+
     public void getAtmOperations () {
-        int i = 0;
-        while (i != 9) {
+        int i = 0;*/
+        /* В зависимости от опции выбираем метод */
+        /*while (i != 9) {
             if (cardId == null)
                 printer.printUnauthorizedMenu();
             else
@@ -75,6 +70,5 @@ public class AtmController {
             }
 
         }
-    }
- */
+    }*/
 }

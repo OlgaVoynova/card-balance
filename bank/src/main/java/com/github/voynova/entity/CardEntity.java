@@ -2,6 +2,7 @@ package com.github.voynova.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

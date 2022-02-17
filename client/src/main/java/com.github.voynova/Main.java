@@ -1,10 +1,12 @@
 package com.github.voynova;
 
-import com.github.voynova.client.controller.AtmController;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        AtmController atm   = new AtmController();
-        atm.getAtmOperations();
+        SpringApplication.run(Main.class,args);
     }
 }

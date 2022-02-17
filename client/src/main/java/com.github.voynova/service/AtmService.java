@@ -1,22 +1,21 @@
 package com.github.voynova.service;
 
-import com.github.voynova.controller.CardController;
 import com.github.voynova.entity.Credentionals;
+import com.github.voynova.sender.Sender;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class AtmService {
-    private CardController cardController;
-
-    public AtmService () {
-        this.cardController = new CardController();
-    }
+    private Sender sender;
 
     public int getCardBalance (UUID cardId) {
-        return cardController.getCardBalance(cardId);
+
+        return sender.getCardBalance(cardId);
     }
 
     public UUID getAuthorization (Credentionals credentionals) {
-        return cardController.getAuthorization(credentionals.getCardNumber(), credentionals.getCardPin());
+        return sender.getAuthorization(credentionals.getCardNumber(), credentionals.getCardPin());
     }
 }
