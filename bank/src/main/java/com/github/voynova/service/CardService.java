@@ -3,7 +3,7 @@ package com.github.voynova.service;
 import com.github.voynova.dto.response.CardBalanceDto;
 import com.github.voynova.entity.CardEntity;
 import com.github.voynova.entity.SessionEntity;
-import com.github.voynova.entity.additional.AuthorizationFailCode;
+import com.github.voynova.entity.additional.*;
 import com.github.voynova.repository.CardRepository;
 import com.github.voynova.repository.SessionRepository;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class CardService {
     public CardBalanceDto getCardBalance (@NonNull UUID sessionId) throws IllegalAccessException {
         SessionEntity session = sessionRepository.getSessionEntityById(sessionId);
         if (session == null || session.getCard() == null || session.getAttemptTimestamp().isBefore(LocalDateTime.now().minusMinutes(SESSION_DURATION_MINUTES))) {
-            throw new IllegalAccessException("Необходима авторизация!");
+            throw new IllegalAccessException("AUTHORIZATION NEEDED");
         } else {
             return new CardBalanceDto(session.getCard().getBalance());
         }
@@ -50,18 +50,16 @@ public class CardService {
         CardEntity cardEntity = cardRepository.findCardEntityByNumberAndPin(cardNumber,pin);
         if (cardEntity == null) {
             sessionRepository.save(new SessionEntity(null,false, AuthorizationFailCode.CARD_NOT_FOUND));
-            throw new IllegalArgumentException("Карта не найдена!");
+            throw new IllegalArgumentException("CARD NOT FOUND");
         }
         else if (cardEntity.getExpireDate().isBefore(LocalDate.now())) {
             sessionRepository.save(new SessionEntity(cardEntity,false, AuthorizationFailCode.CARD_EXPIRED));
-            throw new IllegalStateException("Срок действия вашей карты истек!");
+            throw new IllegalStateException("CARD IS EXPIRED");
         }
         else {
-            System.out.println("now - " + LocalDateTime.now().minusMinutes(SESSION_DURATION_MINUTES));
             SessionEntity session = sessionRepository.getSessionEntityByCardAndAttemptTimestampIsAfter(cardEntity,LocalDateTime.now().minusMinutes(SESSION_DURATION_MINUTES));
             if (session == null) {
                 session = new SessionEntity(cardEntity,true, null);
-                System.out.println("session started at " + session.getAttemptTimestamp());
                 sessionRepository.save(session);
             }
             return session.getId();

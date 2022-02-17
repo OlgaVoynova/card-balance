@@ -1,9 +1,9 @@
 package com.github.voynova.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+import lombok.Value;
 
-@Getter
+@Value
 public class Credentionals {
     private String cardNumber;
     private String cardPin;

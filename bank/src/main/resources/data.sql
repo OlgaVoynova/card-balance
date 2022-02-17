@@ -1,4 +1,3 @@
-/*
 insert into card
 (id,balance,pin,number,expire_date)
 values
@@ -13,4 +12,4 @@ values
     ('8437105d-5c23-4a6a-a481-99e1a3b2b9d1','8437105d-5c23-4a6a-a481-99e1a3b2b9d1',null,true,to_timestamp('09.01.22 01:00:00', 'DD.MM.RR HH24:MI:SS')),
     ('8437105d-5c23-4a6a-a481-99e1a3b2b9d2',null,'CARD_NOT_FOUND',false,to_timestamp('09.01.22 00:00:00', 'DD.MM.RR HH24:MI:SS'))
     ;
-commit;*/
+commit;

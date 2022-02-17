@@ -1,8 +1,7 @@
 package com.github.voynova.entity;
 
-import com.github.voynova.entity.additional.AuthorizationFailCode;
+import com.github.voynova.entity.additional.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
