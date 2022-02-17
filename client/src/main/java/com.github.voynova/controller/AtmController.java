@@ -18,8 +18,8 @@ public class AtmController {
     private AtmService atmService;
 
     @GetMapping("/ATM/card/{guid}/balance")
-    private void getCardBalance (@PathVariable("guid") UUID cardGuid) {
-        System.out.println("Запрашиваю баланс по карте " + cardGuid);
+    private ResponseEnvelope getCardBalance (@PathVariable("guid") UUID cardGuid) {
+        return atmService.getCardBalance(cardGuid);
     }
 
     @PostMapping("/ATM/card/authorization")

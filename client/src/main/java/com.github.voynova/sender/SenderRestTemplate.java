@@ -8,15 +8,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Component
 public class SenderRestTemplate implements Sender {
     @Override
-    public int getCardBalance(UUID cardId) {
-        /*RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Credentionals> request = new HttpEntity<>();*/
-        return 0;
+    public ResponseEnvelope getCardBalance(UUID cardId) {
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String,String> params = Map.ofEntries(Map.entry("guid",cardId.toString()));
+        ResponseEntity<ResponseEnvelope> response = restTemplate.getForEntity("http://127.0.0.1:8080/card/{guid}/balance",ResponseEnvelope.class,params);
+        return response.getBody();
     }
 
     @Override

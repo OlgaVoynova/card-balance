@@ -8,6 +8,6 @@ import java.util.UUID;
 
 @Component
 public interface Sender {
-    int getCardBalance(UUID cardId);
+    ResponseEnvelope getCardBalance(UUID cardId);
     ResponseEnvelope getAuthorization(Credentionals credentionals);
 }

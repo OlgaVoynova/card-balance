@@ -13,7 +13,7 @@ import java.util.UUID;
 public class AtmService {
     private Sender sender;
 
-    public int getCardBalance (UUID cardId) {
+    public ResponseEnvelope getCardBalance (UUID cardId) {
         return sender.getCardBalance(cardId);
     }
 
