@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-//TODO в этих методах должны вызываться методы сервиса, который передает данные через Rest Template В bank
 public class AtmController {
 
     private AtmService atmService;
