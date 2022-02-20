@@ -8,9 +8,13 @@
     <artifactId>bank</artifactId>
     <version>1.0.0</version>
 
+    <parent>
+        <groupId>com.github.voynova</groupId>
+        <artifactId>cardBalance</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
     <properties>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
         <lombok.version>1.18.10</lombok.version>
         <springboot.version>2.5.4</springboot.version>
         <springboot.starterweb.version>2.5.4</springboot.starterweb.version>
@@ -33,15 +37,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${springboot.maven.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${springboot.maven.compiler.version}</version>
-                <configuration>
-                    <source>${maven.compiler.target}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

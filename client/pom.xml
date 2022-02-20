@@ -8,12 +8,20 @@
     <artifactId>client</artifactId>
     <version>1.0.0</version>
 
+    <parent>
+        <groupId>com.github.voynova</groupId>
+        <artifactId>cardBalance</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
     <properties>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
         <lombok.version>1.18.22</lombok.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <mojo.version>1.2.1</mojo.version>
+        <springboot.maven.compiler.version>3.8.1</springboot.maven.compiler.version>
         <springboot.version>2.5.4</springboot.version>
         <springboot.starterweb.version>2.5.4</springboot.starterweb.version>
+
     </properties>
 
     <build>
@@ -21,22 +29,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.4</version>
-
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
+                <version>${springboot.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <version>${mojo.version}</version>
                 <configuration>
                     <mainClass>com.github.voynova.Main</mainClass>
                 </configuration>
