@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.voynova</groupId>
+    <artifactId>client</artifactId>
+    <version>1.0.0</version>
+
+    <parent>
+        <groupId>com.github.voynova</groupId>
+        <artifactId>cardBalance</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <properties>
+        <lombok.version>1.18.22</lombok.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <mojo.version>1.2.1</mojo.version>
+        <springboot.maven.compiler.version>3.8.1</springboot.maven.compiler.version>
+        <springboot.version>2.5.4</springboot.version>
+        <springboot.starterweb.version>2.5.4</springboot.starterweb.version>
+
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${mojo.version}</version>
+                <configuration>
+                    <mainClass>com.github.voynova.Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${springboot.starterweb.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>
